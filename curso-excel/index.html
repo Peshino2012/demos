@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Excel que Rinde</title>
+<meta name="description" content="Curso online de Excel para el trabajo: 12 fórmulas, tablas dinámicas y automatizaciones simples. 100% práctico, con planillas reales.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root {
+  --ground: #F6F8F7;
+  --surface: #FFFFFF;
+  --ink: #13201A;
+  --muted: #56645C;
+  --line: #D6DED9;
+  --grid: #E3E9E5;
+  --accent: #107C41;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E2F1E8;
+  --mark: #FFE38A;
+  --display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #0F1512;
+    --surface: #161E1A;
+    --ink: #E6EEE9;
+    --muted: #9DAEA4;
+    --line: #2A3530;
+    --grid: #222C27;
+    --accent: #3DBF78;
+    --accent-ink: #06140C;
+    --accent-soft: #173024;
+    --mark: #6B5A1C;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #0F1512;
+  --surface: #161E1A;
+  --ink: #E6EEE9;
+  --muted: #9DAEA4;
+  --line: #2A3530;
+  --grid: #222C27;
+  --accent: #3DBF78;
+  --accent-ink: #06140C;
+  --accent-soft: #173024;
+  --mark: #6B5A1C;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--ground); color: var(--ink); font: 400 17px/1.6 var(--body); padding-inline: 16px; }
+.wrap { max-width: 1080px; margin-inline: auto; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.08; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.demo-bar { margin-inline: -16px; padding: 8px 16px; background: var(--ink); color: var(--ground); font-size: 13px; text-align: center; }
+
+header.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 18px; }
+.logo { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 800; font-size: 20px; text-decoration: none; }
+.logo i { width: 28px; height: 28px; border-radius: 6px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font: 800 15px/1 var(--display); font-style: normal; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 22px; border-radius: 8px; font: 600 16px/1 var(--body); text-decoration: none; border: 1px solid transparent; cursor: pointer; }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-small { padding: 10px 16px; font-size: 15px; }
+
+.hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; padding-block: 48px 64px; }
+.kicker { display: inline-block; font: 500 13px/1 var(--mono); color: var(--accent); background: var(--accent-soft); padding: 6px 10px; border-radius: 4px; }
+.hero h1 { margin-top: 18px; font-size: clamp(38px, 5.6vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 mark { background: linear-gradient(transparent 58%, var(--mark) 58%); color: inherit; padding-inline: 2px; }
+.hero .lede { margin-top: 20px; font-size: 19px; color: var(--muted); max-width: 32em; }
+.hero .ctas { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+.hero .ctas small { color: var(--muted); font-size: 14px; }
+
+/* Mini planilla del hero */
+.sheet { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 18px 40px -24px rgba(16, 60, 36, .45); }
+.fx { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--line); font: 500 13px/1.3 var(--mono); }
+.fx b { color: var(--muted); font-weight: 500; font-style: italic; }
+.fx code { color: var(--accent); overflow-wrap: anywhere; }
+.sheet-scroll { overflow-x: auto; }
+.sheet table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+.sheet th, .sheet td { border: 1px solid var(--grid); padding: 7px 10px; text-align: left; white-space: nowrap; }
+.sheet thead th { background: var(--ground); color: var(--muted); font: 500 12px/1 var(--mono); text-align: center; }
+.sheet tbody th { background: var(--ground); color: var(--muted); font: 500 12px/1 var(--mono); width: 32px; text-align: center; }
+.sheet .num { text-align: right; }
+.sheet .hdr td { font-weight: 600; }
+.sheet .sel { outline: 2px solid var(--accent); outline-offset: -2px; background: var(--accent-soft); font-weight: 600; }
+
+section.block { padding-block: 64px; border-top: 1px solid var(--line); }
+.block h2 { font-size: clamp(30px, 4vw, 44px); font-weight: 800; letter-spacing: -.015em; }
+.block .intro { margin-top: 12px; color: var(--muted); max-width: 38em; }
+
+.fit { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.fit div { display: grid; gap: 6px; padding-top: 16px; border-top: 3px solid var(--accent); }
+.fit b { font-size: 18px; }
+.fit span { color: var(--muted); font-size: 16px; }
+
+.modules { margin-top: 32px; display: grid; }
+.module { display: grid; grid-template-columns: 7em 1fr auto; gap: 20px; align-items: baseline; padding-block: 18px; border-top: 1px solid var(--line); }
+.module:last-child { border-bottom: 1px solid var(--line); }
+.module .cell { font: 500 13px/1 var(--mono); color: var(--accent); }
+.module h3 { font-family: var(--body); font-weight: 600; font-size: 19px; line-height: 1.3; }
+.module p { color: var(--muted); font-size: 16px; margin-top: 4px; }
+.module .dur { font: 500 13px/1 var(--mono); color: var(--muted); white-space: nowrap; }
+.total { margin-top: 14px; font: 500 14px/1.4 var(--mono); color: var(--muted); text-align: right; }
+
+.offer { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.includes { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.includes li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; }
+.includes li::before { content: "✓"; color: var(--accent); font-weight: 700; }
+.price { background: var(--surface); border: 2px solid var(--accent); border-radius: 12px; padding: 28px; display: grid; gap: 14px; }
+.price .tag { font: 500 13px/1 var(--mono); color: var(--accent); }
+.price .amount { font-family: var(--display); font-weight: 800; font-size: clamp(36px, 9vw, 48px); white-space: nowrap; line-height: 1; font-variant-numeric: tabular-nums; }
+.price .amount small { font-size: 18px; font-weight: 600; color: var(--muted); }
+.price p { color: var(--muted); font-size: 15px; }
+.price form { display: grid; gap: 10px; margin-top: 6px; }
+.price label { font-size: 14px; font-weight: 600; }
+.price input { font: inherit; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--ground); color: var(--ink); }
+.price .ok { background: var(--accent-soft); color: var(--ink); padding: 12px 14px; border-radius: 8px; font-size: 15px; }
+
+.teacher { display: grid; grid-template-columns: 96px 1fr; gap: 24px; align-items: start; max-width: 46em; margin-top: 28px; }
+.avatar { width: 96px; height: 96px; border-radius: 12px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font: 800 34px/1 var(--display); }
+.teacher h3 { font-size: 24px; }
+.teacher p { margin-top: 8px; color: var(--muted); }
+
+.faq { margin-top: 28px; max-width: 46em; }
+.faq details { border-top: 1px solid var(--line); padding-block: 16px; }
+.faq details:last-child { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; font-weight: 600; font-size: 18px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--accent); font-size: 22px; line-height: 1; }
+.faq details[open] summary::after { content: "−"; }
+.faq details p { margin-top: 10px; color: var(--muted); }
+
+footer { padding-block: 32px 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; display: grid; gap: 6px; }
+
+@media (max-width: 820px) {
+  .hero, .offer { grid-template-columns: 1fr; }
+  .hero { padding-block: 32px 48px; gap: 36px; }
+  .fit { grid-template-columns: 1fr; }
+  .module { grid-template-columns: 1fr auto; }
+  .module .cell { grid-column: 1 / -1; }
+  section.block { padding-block: 48px; }
+}
+@media (max-width: 420px) {
+  .teacher { grid-template-columns: 1fr; }
+  .module { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="demo-bar">Demo de diseño — el curso, la docente y los precios son ficticios. · <a href="en.html" style="color:inherit">English version</a> · <a href="../" style="color:inherit">← Todas las demos</a></div>
+
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#inicio"><i>X</i>Excel que Rinde</a>
+    <a class="btn btn-primary btn-small" href="#inscripcion">Inscribirme</a>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div>
+        <span class="kicker">Curso online · 100% práctico</span>
+        <h1>Dejá de copiar y pegar. Aprendé las <mark>12 fórmulas</mark> que usás todos los días.</h1>
+        <p class="lede">Para quienes trabajan con planillas y sienten que tardan demasiado: facturación, stock, sueldos o reportes. Con archivos reales de oficina, no ejemplos de libro.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#inscripcion">Quiero inscribirme</a>
+          <small>Empieza el 6 de octubre · cupos limitados</small>
+        </div>
+      </div>
+
+      <div class="sheet" role="img" aria-label="Ejemplo de planilla con la fórmula BUSCARX calculando el precio de un producto">
+        <div class="fx"><b>fx</b><code>=BUSCARX(B3; Precios!A:A; Precios!C:C)</code></div>
+        <div class="sheet-scroll">
+          <table>
+            <thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr></thead>
+            <tbody>
+              <tr class="hdr"><th>1</th><td>Fecha</td><td>Producto</td><td>Cant.</td><td class="num">Precio</td></tr>
+              <tr><th>2</th><td>03/10</td><td>Yerba 1kg</td><td class="num">12</td><td class="num">$ 4.200</td></tr>
+              <tr><th>3</th><td>03/10</td><td>Café 500g</td><td class="num">6</td><td class="num sel">$ 6.900</td></tr>
+              <tr><th>4</th><td>04/10</td><td>Arroz 1kg</td><td class="num">20</td><td class="num">$ 1.650</td></tr>
+              <tr><th>5</th><td>04/10</td><td>Aceite 1,5L</td><td class="num">8</td><td class="num">$ 3.800</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>¿Es para vos?</h2>
+      <p class="intro">No hace falta saber nada de programación. Sí haber usado Excel o Google Sheets alguna vez.</p>
+      <div class="fit">
+        <div><b>Administrativos</b><span>Que arman los mismos reportes cada semana y quieren hacerlos en minutos.</span></div>
+        <div><b>Emprendedores</b><span>Que llevan stock, ventas y gastos en planillas que ya se volvieron un caos.</span></div>
+        <div><b>Quienes buscan trabajo</b><span>Excel intermedio aparece en la mayoría de los avisos de oficina.</span></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Temario</h2>
+      <p class="intro">Seis módulos cortos. Cada uno termina con una planilla real que resolvés vos.</p>
+      <div class="modules">
+        <div class="module"><span class="cell">Módulo 1</span><div><h3>Ordenar datos que llegan desordenados</h3><p>ESPACIOS, NOMPROPIO, texto en columnas y quitar duplicados.</p></div><span class="dur">1 h 10 min</span></div>
+        <div class="module"><span class="cell">Módulo 2</span><div><h3>Buscar y cruzar información</h3><p>BUSCARX, BUSCARV e INDICE + COINCIDIR, y cuándo usar cada una.</p></div><span class="dur">1 h 30 min</span></div>
+        <div class="module"><span class="cell">Módulo 3</span><div><h3>Sumar y contar con condiciones</h3><p>SUMAR.SI.CONJUNTO y CONTAR.SI.CONJUNTO para reportes por mes, sucursal o vendedor.</p></div><span class="dur">1 h 15 min</span></div>
+        <div class="module"><span class="cell">Módulo 4</span><div><h3>Fechas y vencimientos</h3><p>DIAS.LAB, FIN.MES y formato condicional para no perder un vencimiento.</p></div><span class="dur">50 min</span></div>
+        <div class="module"><span class="cell">Módulo 5</span><div><h3>Tablas dinámicas y gráficos</h3><p>Resumir miles de filas en segundos y presentarlas con claridad.</p></div><span class="dur">1 h 40 min</span></div>
+        <div class="module"><span class="cell">Módulo 6</span><div><h3>Automatizar lo repetitivo</h3><p>Grabar macros simples y consolidar varias planillas en una.</p></div><span class="dur">1 h 20 min</span></div>
+      </div>
+      <p class="total">Total: 7 h 45 min de video + 6 planillas de práctica</p>
+    </section>
+
+    <section class="block" id="inscripcion">
+      <div class="offer">
+        <div>
+          <h2>Qué incluye</h2>
+          <ul class="includes">
+            <li>Acceso a las clases grabadas durante 12 meses.</li>
+            <li>6 planillas de práctica con su resolución paso a paso.</li>
+            <li>Consultas por el grupo del curso, respondidas en 48 h hábiles.</li>
+            <li>Certificado de finalización.</li>
+            <li>Funciona con Excel 2021, Microsoft 365 y Google Sheets.</li>
+          </ul>
+        </div>
+        <div class="price">
+          <span class="tag">Precio de lanzamiento</span>
+          <div class="amount">AR$ 45.000 <small>un pago</small></div>
+          <p>O en 3 cuotas sin interés con tarjeta. Si en los primeros 7 días el curso no es lo que esperabas, te devolvemos el dinero.</p>
+          <form id="form-inscripcion" novalidate>
+            <label for="email">Tu email para reservar el lugar</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="nombre@ejemplo.com" required>
+            <button class="btn btn-primary" type="submit">Reservar mi lugar</button>
+            <p class="ok" id="form-ok" hidden>Demo: en el sitio real, acá se enviaría la reserva y se redirigiría al pago.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Quién enseña</h2>
+      <div class="teacher">
+        <div class="avatar" aria-hidden="true">VR</div>
+        <div>
+          <h3>Valeria Ruiz</h3>
+          <p>Contadora. Durante diez años armó los reportes de gestión de una distribuidora con cinco sucursales, y enseña exactamente las herramientas que usaba todos los días.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq">
+        <details><summary>¿Las clases son en vivo?</summary><p>No. Son grabadas y las ves cuando quieras. Las dudas se responden por escrito en el grupo del curso.</p></details>
+        <details><summary>¿Sirve si uso Google Sheets?</summary><p>Sí. Cuando una fórmula cambia de nombre o de forma en Google Sheets, lo mostramos en la misma clase.</p></details>
+        <details><summary>¿Necesito una computadora potente?</summary><p>No. Cualquier computadora que abra Excel o un navegador alcanza.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Excel que Rinde — curso ficticio creado como demo de diseño.</p>
+  </footer>
+</div>
+
+<script>
+  const form = document.getElementById('form-inscripcion');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email');
+    if (!email.checkValidity()) { email.reportValidity(); return; }
+    document.getElementById('form-ok').hidden = false;
+  });
+</script>
+</html>

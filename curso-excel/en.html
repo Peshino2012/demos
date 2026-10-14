@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Excel That Works</title>
+<meta name="description" content="Online Excel course for work: 12 formulas, pivot tables and simple automations. 100% hands-on, with real spreadsheets.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root {
+  --ground: #F6F8F7;
+  --surface: #FFFFFF;
+  --ink: #13201A;
+  --muted: #56645C;
+  --line: #D6DED9;
+  --grid: #E3E9E5;
+  --accent: #107C41;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E2F1E8;
+  --mark: #FFE38A;
+  --display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #0F1512;
+    --surface: #161E1A;
+    --ink: #E6EEE9;
+    --muted: #9DAEA4;
+    --line: #2A3530;
+    --grid: #222C27;
+    --accent: #3DBF78;
+    --accent-ink: #06140C;
+    --accent-soft: #173024;
+    --mark: #6B5A1C;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #0F1512;
+  --surface: #161E1A;
+  --ink: #E6EEE9;
+  --muted: #9DAEA4;
+  --line: #2A3530;
+  --grid: #222C27;
+  --accent: #3DBF78;
+  --accent-ink: #06140C;
+  --accent-soft: #173024;
+  --mark: #6B5A1C;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--ground); color: var(--ink); font: 400 17px/1.6 var(--body); padding-inline: 16px; }
+.wrap { max-width: 1080px; margin-inline: auto; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.08; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.demo-bar { margin-inline: -16px; padding: 8px 16px; background: var(--ink); color: var(--ground); font-size: 13px; text-align: center; }
+
+header.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 18px; }
+.logo { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 800; font-size: 20px; text-decoration: none; }
+.logo i { width: 28px; height: 28px; border-radius: 6px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font: 800 15px/1 var(--display); font-style: normal; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 22px; border-radius: 8px; font: 600 16px/1 var(--body); text-decoration: none; border: 1px solid transparent; cursor: pointer; }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-small { padding: 10px 16px; font-size: 15px; }
+
+.hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; padding-block: 48px 64px; }
+.kicker { display: inline-block; font: 500 13px/1 var(--mono); color: var(--accent); background: var(--accent-soft); padding: 6px 10px; border-radius: 4px; }
+.hero h1 { margin-top: 18px; font-size: clamp(38px, 5.6vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 mark { background: linear-gradient(transparent 58%, var(--mark) 58%); color: inherit; padding-inline: 2px; }
+.hero .lede { margin-top: 20px; font-size: 19px; color: var(--muted); max-width: 32em; }
+.hero .ctas { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+.hero .ctas small { color: var(--muted); font-size: 14px; }
+
+/* Mini planilla del hero */
+.sheet { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 18px 40px -24px rgba(16, 60, 36, .45); }
+.fx { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--line); font: 500 13px/1.3 var(--mono); }
+.fx b { color: var(--muted); font-weight: 500; font-style: italic; }
+.fx code { color: var(--accent); overflow-wrap: anywhere; }
+.sheet-scroll { overflow-x: auto; }
+.sheet table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+.sheet th, .sheet td { border: 1px solid var(--grid); padding: 7px 10px; text-align: left; white-space: nowrap; }
+.sheet thead th { background: var(--ground); color: var(--muted); font: 500 12px/1 var(--mono); text-align: center; }
+.sheet tbody th { background: var(--ground); color: var(--muted); font: 500 12px/1 var(--mono); width: 32px; text-align: center; }
+.sheet .num { text-align: right; }
+.sheet .hdr td { font-weight: 600; }
+.sheet .sel { outline: 2px solid var(--accent); outline-offset: -2px; background: var(--accent-soft); font-weight: 600; }
+
+section.block { padding-block: 64px; border-top: 1px solid var(--line); }
+.block h2 { font-size: clamp(30px, 4vw, 44px); font-weight: 800; letter-spacing: -.015em; }
+.block .intro { margin-top: 12px; color: var(--muted); max-width: 38em; }
+
+.fit { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.fit div { display: grid; gap: 6px; padding-top: 16px; border-top: 3px solid var(--accent); }
+.fit b { font-size: 18px; }
+.fit span { color: var(--muted); font-size: 16px; }
+
+.modules { margin-top: 32px; display: grid; }
+.module { display: grid; grid-template-columns: 7em 1fr auto; gap: 20px; align-items: baseline; padding-block: 18px; border-top: 1px solid var(--line); }
+.module:last-child { border-bottom: 1px solid var(--line); }
+.module .cell { font: 500 13px/1 var(--mono); color: var(--accent); }
+.module h3 { font-family: var(--body); font-weight: 600; font-size: 19px; line-height: 1.3; }
+.module p { color: var(--muted); font-size: 16px; margin-top: 4px; }
+.module .dur { font: 500 13px/1 var(--mono); color: var(--muted); white-space: nowrap; }
+.total { margin-top: 14px; font: 500 14px/1.4 var(--mono); color: var(--muted); text-align: right; }
+
+.offer { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.includes { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.includes li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; }
+.includes li::before { content: "✓"; color: var(--accent); font-weight: 700; }
+.price { background: var(--surface); border: 2px solid var(--accent); border-radius: 12px; padding: 28px; display: grid; gap: 14px; }
+.price .tag { font: 500 13px/1 var(--mono); color: var(--accent); }
+.price .amount { font-family: var(--display); font-weight: 800; font-size: clamp(36px, 9vw, 48px); white-space: nowrap; line-height: 1; font-variant-numeric: tabular-nums; }
+.price .amount small { font-size: 18px; font-weight: 600; color: var(--muted); }
+.price p { color: var(--muted); font-size: 15px; }
+.price form { display: grid; gap: 10px; margin-top: 6px; }
+.price label { font-size: 14px; font-weight: 600; }
+.price input { font: inherit; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--ground); color: var(--ink); }
+.price .ok { background: var(--accent-soft); color: var(--ink); padding: 12px 14px; border-radius: 8px; font-size: 15px; }
+
+.teacher { display: grid; grid-template-columns: 96px 1fr; gap: 24px; align-items: start; max-width: 46em; margin-top: 28px; }
+.avatar { width: 96px; height: 96px; border-radius: 12px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font: 800 34px/1 var(--display); }
+.teacher h3 { font-size: 24px; }
+.teacher p { margin-top: 8px; color: var(--muted); }
+
+.faq { margin-top: 28px; max-width: 46em; }
+.faq details { border-top: 1px solid var(--line); padding-block: 16px; }
+.faq details:last-child { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; font-weight: 600; font-size: 18px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--accent); font-size: 22px; line-height: 1; }
+.faq details[open] summary::after { content: "−"; }
+.faq details p { margin-top: 10px; color: var(--muted); }
+
+footer { padding-block: 32px 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; display: grid; gap: 6px; }
+
+@media (max-width: 820px) {
+  .hero, .offer { grid-template-columns: 1fr; }
+  .hero { padding-block: 32px 48px; gap: 36px; }
+  .fit { grid-template-columns: 1fr; }
+  .module { grid-template-columns: 1fr auto; }
+  .module .cell { grid-column: 1 / -1; }
+  section.block { padding-block: 48px; }
+}
+@media (max-width: 420px) {
+  .teacher { grid-template-columns: 1fr; }
+  .module { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="demo-bar">Design demo: the course, the instructor and the prices are fictional. · <a href="./" style="color:inherit">Versión en español</a> · <a href="../" style="color:inherit">← All demos</a></div>
+
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#top"><i>X</i>Excel That Works</a>
+    <a class="btn btn-primary btn-small" href="#enroll">Enroll</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <span class="kicker">Online course · 100% hands-on</span>
+        <h1>Stop copying and pasting. Learn the <mark>12 formulas</mark> you use every day.</h1>
+        <p class="lede">For people who work with spreadsheets and feel it takes too long: invoicing, inventory, payroll or reports. With real office files, not textbook examples.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#enroll">I want to enroll</a>
+          <small>Starts October 6 · limited seats</small>
+        </div>
+      </div>
+
+      <div class="sheet" role="img" aria-label="Sample spreadsheet with the XLOOKUP formula returning a product price">
+        <div class="fx"><b>fx</b><code>=XLOOKUP(B3, Prices!A:A, Prices!C:C)</code></div>
+        <div class="sheet-scroll">
+          <table>
+            <thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr></thead>
+            <tbody>
+              <tr class="hdr"><th>1</th><td>Date</td><td>Product</td><td>Qty</td><td class="num">Price</td></tr>
+              <tr><th>2</th><td>10/03</td><td>Coffee 1lb</td><td class="num">12</td><td class="num">$8.50</td></tr>
+              <tr><th>3</th><td>10/03</td><td>Green tea</td><td class="num">6</td><td class="num sel">$4.90</td></tr>
+              <tr><th>4</th><td>10/04</td><td>Rice 2lb</td><td class="num">20</td><td class="num">$3.20</td></tr>
+              <tr><th>5</th><td>10/04</td><td>Olive oil</td><td class="num">8</td><td class="num">$11.75</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Is it for you?</h2>
+      <p class="intro">No coding knowledge needed. Just some experience using Excel or Google Sheets.</p>
+      <div class="fit">
+        <div><b>Office staff</b><span>Who build the same reports every week and want to do them in minutes.</span></div>
+        <div><b>Small business owners</b><span>Who track inventory, sales and expenses in spreadsheets that became a mess.</span></div>
+        <div><b>Job seekers</b><span>Intermediate Excel shows up in most office job listings.</span></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Syllabus</h2>
+      <p class="intro">Six short modules. Each one ends with a real spreadsheet you solve yourself.</p>
+      <div class="modules">
+        <div class="module"><span class="cell">Module 1</span><div><h3>Tidy up messy data</h3><p>TRIM, PROPER, text to columns and removing duplicates.</p></div><span class="dur">1 h 10 min</span></div>
+        <div class="module"><span class="cell">Module 2</span><div><h3>Look up and combine data</h3><p>XLOOKUP, VLOOKUP and INDEX + MATCH, and when to use each one.</p></div><span class="dur">1 h 30 min</span></div>
+        <div class="module"><span class="cell">Module 3</span><div><h3>Sum and count with conditions</h3><p>SUMIFS and COUNTIFS for reports by month, branch or salesperson.</p></div><span class="dur">1 h 15 min</span></div>
+        <div class="module"><span class="cell">Module 4</span><div><h3>Dates and deadlines</h3><p>NETWORKDAYS, EOMONTH and conditional formatting so you never miss a due date.</p></div><span class="dur">50 min</span></div>
+        <div class="module"><span class="cell">Module 5</span><div><h3>Pivot tables and charts</h3><p>Summarize thousands of rows in seconds and present them clearly.</p></div><span class="dur">1 h 40 min</span></div>
+        <div class="module"><span class="cell">Module 6</span><div><h3>Automate the repetitive</h3><p>Record simple macros and merge several spreadsheets into one.</p></div><span class="dur">1 h 20 min</span></div>
+      </div>
+      <p class="total">Total: 7 h 45 min of video + 6 practice spreadsheets</p>
+    </section>
+
+    <section class="block" id="enroll">
+      <div class="offer">
+        <div>
+          <h2>What's included</h2>
+          <ul class="includes">
+            <li>12 months of access to the recorded lessons.</li>
+            <li>6 practice spreadsheets with step-by-step solutions.</li>
+            <li>Questions answered in the course group within 48 business hours.</li>
+            <li>Certificate of completion.</li>
+            <li>Works with Excel 2021, Microsoft 365 and Google Sheets.</li>
+          </ul>
+        </div>
+        <div class="price">
+          <span class="tag">Launch price</span>
+          <div class="amount">$49 <small>one-time</small></div>
+          <p>Not what you expected? Get a full refund within the first 7 days.</p>
+          <form id="form-enroll" novalidate>
+            <label for="email">Your email to save your seat</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+            <button class="btn btn-primary" type="submit">Save my seat</button>
+            <p class="ok" id="form-ok" hidden>Demo: on the real site, this would send the booking and redirect to checkout.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Your instructor</h2>
+      <div class="teacher">
+        <div class="avatar" aria-hidden="true">VR</div>
+        <div>
+          <h3>Valerie Ruiz</h3>
+          <p>Accountant. For ten years she built the management reports of a distributor with five branches, and she teaches exactly the tools she used every day.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>FAQ</h2>
+      <div class="faq">
+        <details><summary>Are the classes live?</summary><p>No. They're recorded, so you watch them whenever you want. Questions are answered in writing in the course group.</p></details>
+        <details><summary>Does it work with Google Sheets?</summary><p>Yes. When a formula has a different name or syntax in Google Sheets, we show it in the same lesson.</p></details>
+        <details><summary>Do I need a powerful computer?</summary><p>No. Any computer that runs Excel or a web browser is enough.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Excel That Works: a fictional course created as a design demo.</p>
+  </footer>
+</div>
+
+<script>
+  const form = document.getElementById('form-enroll');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email');
+    if (!email.checkValidity()) { email.reportValidity(); return; }
+    document.getElementById('form-ok').hidden = false;
+  });
+</script>
+</html>

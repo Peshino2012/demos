@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ferreyra &amp; Solis Law</title>
+<meta name="description" content="Employment and personal injury lawyers. Wrongful termination, accidents, estates and contracts. Message us on WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root {
+  --ground: #F4F5F2;
+  --surface: #FFFFFF;
+  --ink: #1B211E;
+  --muted: #58625C;
+  --line: #D8DCD6;
+  --accent: #7A2E2E;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #F3E7E4;
+  --wa: #1DA851;
+  --wa-ink: #FFFFFF;
+  --display: "Spectral", Georgia, "Times New Roman", serif;
+  --body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #141816;
+    --surface: #1C211F;
+    --ink: #E8EBE8;
+    --muted: #A2ABA5;
+    --line: #2F3633;
+    --accent: #D98C84;
+    --accent-ink: #1B1110;
+    --accent-soft: #2B1F1E;
+    --wa: #2BC466;
+    --wa-ink: #0B1A10;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #141816;
+  --surface: #1C211F;
+  --ink: #E8EBE8;
+  --muted: #A2ABA5;
+  --line: #2F3633;
+  --accent: #D98C84;
+  --accent-ink: #1B1110;
+  --accent-soft: #2B1F1E;
+  --wa: #2BC466;
+  --wa-ink: #0B1A10;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font: 400 16px/1.6 var(--body);
+  padding-inline: 16px;
+}
+.wrap { max-width: 1040px; margin-inline: auto; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.15; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.demo-bar {
+  margin-inline: -16px;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--ground);
+  font-size: 13px;
+  text-align: center;
+}
+
+header.top {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding-block: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; flex-direction: column; gap: 2px; text-decoration: none; }
+.brand b { font-family: var(--display); font-size: 21px; font-weight: 600; letter-spacing: .01em; }
+.brand span { font-size: 12px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+nav.links { display: flex; gap: 24px; font-size: 15px; }
+nav.links a { text-decoration: none; color: var(--muted); }
+nav.links a:hover { color: var(--ink); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 20px; border-radius: 6px;
+  font: 600 15px/1 var(--body); text-decoration: none;
+  border: 1px solid transparent; cursor: pointer;
+}
+.btn-wa { background: var(--wa); color: var(--wa-ink); }
+.btn-wa:hover { filter: brightness(1.06); }
+.btn-ghost { border-color: var(--line); color: var(--ink); background: transparent; }
+.btn-ghost:hover { border-color: var(--ink); }
+.btn svg { width: 18px; height: 18px; flex: none; }
+
+.hero {
+  display: grid; grid-template-columns: 1.35fr 1fr; gap: 48px; align-items: end;
+  padding-block: 64px 48px;
+}
+.hero h1 { font-size: clamp(34px, 5.2vw, 54px); }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero .lede { margin-top: 20px; font-size: 18px; color: var(--muted); max-width: 34em; }
+.hero .ctas { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+.hero .reply { margin-top: 14px; font-size: 14px; color: var(--muted); }
+
+.deadline {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 24px;
+  display: grid; gap: 16px;
+}
+.deadline h2 { font-size: 20px; }
+.deadline dl { margin: 0; display: grid; gap: 14px; }
+.deadline .row { display: grid; grid-template-columns: 5.5em 1fr; gap: 12px; align-items: baseline; }
+.deadline dt { font-family: var(--display); font-size: 30px; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+.deadline dd { margin: 0; font-size: 15px; }
+.cite { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+
+section.block { padding-block: 56px; border-top: 1px solid var(--line); }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.block > .head { display: grid; gap: 10px; margin-bottom: 32px; max-width: 40em; }
+.block > .head h2 { font-size: clamp(26px, 3.6vw, 36px); }
+.block > .head p { color: var(--muted); }
+
+.areas { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.area h3 { font-size: 24px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.area ul { list-style: none; margin: 16px 0 0; padding: 0; display: grid; }
+.area li { display: grid; gap: 4px; padding-block: 14px; border-top: 1px solid var(--line); }
+.area li b { font-weight: 600; }
+.area li span { color: var(--muted); font-size: 15px; }
+
+.team { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.lawyer {
+  display: grid; grid-template-columns: 72px 1fr; gap: 20px; align-items: start;
+  padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+}
+.mono {
+  width: 72px; height: 72px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent);
+  font-family: var(--display); font-size: 26px; font-weight: 600;
+}
+.lawyer h3 { font-size: 21px; }
+.lawyer .role { color: var(--muted); font-size: 15px; margin-top: 2px; }
+.lawyer p.bio { margin-top: 12px; font-size: 15px; }
+.lawyer .cite { margin-top: 12px; display: block; }
+
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; list-style: none; margin: 0; padding: 0; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; gap: 8px; }
+.steps li::before {
+  content: counter(s);
+  font-family: var(--display); font-size: 34px; line-height: 1; color: var(--accent);
+}
+.steps b { font-size: 17px; }
+.steps span { color: var(--muted); font-size: 15px; }
+
+.faq { display: grid; max-width: 46em; }
+.faq details { border-top: 1px solid var(--line); padding-block: 16px; }
+.faq details:last-child { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; font-weight: 600; font-size: 17px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--accent); font-size: 22px; line-height: 1; }
+.faq details[open] summary::after { content: "−"; }
+.faq details p { margin-top: 10px; color: var(--muted); max-width: 40em; }
+
+.contact {
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: start;
+}
+.contact h2 { font-size: clamp(26px, 3.6vw, 36px); }
+.contact .lede { margin-top: 12px; color: var(--muted); }
+.contact .ctas { margin-top: 24px; }
+.facts { display: grid; gap: 16px; margin: 0; }
+.facts div { display: grid; gap: 2px; }
+.facts dt { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.facts dd { margin: 0; }
+
+footer { padding-block: 32px 96px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
+
+.float-wa {
+  position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  width: 56px; height: 56px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--wa); color: var(--wa-ink);
+  box-shadow: 0 6px 20px rgba(0,0,0,.18);
+}
+.float-wa svg { width: 28px; height: 28px; }
+
+@media (max-width: 760px) {
+  nav.links { display: none; }
+  .hero, .areas, .team, .contact { grid-template-columns: 1fr; }
+  .hero { padding-block: 40px 32px; gap: 32px; }
+  .steps { grid-template-columns: 1fr; }
+  section.block { padding-block: 44px; }
+}
+@media (max-width: 420px) {
+  header.top .btn span { display: none; }
+  .lawyer { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn, nav.links a { transition: filter .15s, border-color .15s, color .15s; }
+}
+</style>
+
+<div class="demo-bar">Design demo: the firm, the lawyers and the contact details are fictional. · <a href="./" style="color:inherit">Versión en español</a> · <a href="../" style="color:inherit">← All demos</a></div>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#inicio">
+      <b>Ferreyra &amp; Solis</b>
+      <span>Attorneys · Employment &amp; Injury</span>
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="#areas">Practice</a>
+      <a href="#equipo">Attorneys</a>
+      <a href="#preguntas">FAQ</a>
+      <a href="#contacto">Contact</a>
+    </nav>
+    <a class="btn btn-wa" href="#contacto" data-event="whatsapp_click" aria-label="Message us on WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3Z"/></svg>
+      <span>WhatsApp</span>
+    </a>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div>
+        <h1>Fired or injured? <em>The clock is already running.</em></h1>
+        <p class="lede">We're a two-attorney firm focused on employment and personal injury law. We tell you clearly whether you have a claim, what it may be worth and what comes next.</p>
+        <div class="ctas">
+          <a class="btn btn-wa" href="#contacto" data-event="whatsapp_click">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>
+            Message us on WhatsApp
+          </a>
+          <a class="btn btn-ghost" href="#areas">See how we can help</a>
+        </div>
+        <p class="reply">We reply the same business day. Your first consultation is free.</p>
+      </div>
+
+      <aside class="deadline" aria-labelledby="plazos-t">
+        <h2 id="plazos-t">Why you shouldn't wait</h2>
+        <dl>
+          <div class="row">
+            <dt>Proof</dt>
+            <dd>is easier to secure right after it happens: documents, photos, witnesses.<br><span class="cite">Keep emails, pay stubs and photos</span></dd>
+          </div>
+          <div class="row">
+            <dt>Time</dt>
+            <dd>limits apply: every claim has a legal deadline, and missing it can end your case.<br><span class="cite">We check yours on day one</span></dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="block" id="areas">
+      <div class="head">
+        <span class="eyebrow">Practice areas</span>
+        <h2>Two specialties, done thoroughly</h2>
+        <p>We'd rather do a few things well. If your case is outside our areas, we refer you to trusted colleagues.</p>
+      </div>
+      <div class="areas">
+        <div class="area">
+          <h3>Employment law</h3>
+          <ul>
+            <li><b>Wrongful termination</b><span>Severance review, unpaid notice and retaliation claims.</span></li>
+            <li><b>Unpaid wages and overtime</b><span>Claims for off-the-books work, misclassification and missing overtime.</span></li>
+            <li><b>Workplace injuries</b><span>Workers' compensation claims and appeals.</span></li>
+          </ul>
+        </div>
+        <div class="area">
+          <h3>Personal injury &amp; civil</h3>
+          <ul>
+            <li><b>Car accidents</b><span>Insurance claims for injuries and property damage.</span></li>
+            <li><b>Estates and probate</b><span>From the first filing to transferring assets, start to finish.</span></li>
+            <li><b>Contracts and leases</b><span>Drafting and review of contracts, lease disputes and evictions.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="equipo">
+      <div class="head">
+        <span class="eyebrow">Attorneys</span>
+        <h2>You'll always talk to the attorney handling your case</h2>
+      </div>
+      <div class="team">
+        <article class="lawyer">
+          <div class="mono" aria-hidden="true">LF</div>
+          <div>
+            <h3>Lucia Ferreyra, Esq.</h3>
+            <p class="role">Employment law</p>
+            <p class="bio">Twelve years representing workers in termination, wage and injury claims.</p>
+            <span class="cite">Bar No. 000000 (example)</span>
+          </div>
+        </article>
+        <article class="lawyer">
+          <div class="mono" aria-hidden="true">MS</div>
+          <div>
+            <h3>Martin Solis, Esq.</h3>
+            <p class="role">Personal injury &amp; civil</p>
+            <p class="bio">Accidents, estates and contracts. Before going to court, he looks for a settlement that saves time and money.</p>
+            <span class="cite">Bar No. 000000 (example)</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="head">
+        <span class="eyebrow">How we work</span>
+        <h2>From your first message to a clear plan</h2>
+      </div>
+      <ol class="steps">
+        <li><b>Message us on WhatsApp</b><span>Tell us briefly what happened. We reply the same business day.</span></li>
+        <li><b>We review your documents</b><span>Pay stubs, letters, reports or contracts: we tell you what's needed.</span></li>
+        <li><b>We propose a path</b><span>Options, estimated timelines and fees in writing, before we start.</span></li>
+      </ol>
+    </section>
+
+    <section class="block" id="preguntas">
+      <div class="head">
+        <span class="eyebrow">FAQ</span>
+        <h2>What clients ask us most</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Is the first consultation free?</summary>
+          <p>Yes. The first consultation over WhatsApp is free. If we need a meeting to review documents, we'll tell you the fee beforehand.</p>
+        </details>
+        <details>
+          <summary>I was fired. What should I do first?</summary>
+          <p>Don't sign anything you don't understand, and keep pay stubs, letters and messages. Contact us and we'll tell you how to respond.</p>
+        </details>
+        <details>
+          <summary>Do you take cases outside the city?</summary>
+          <p>We do video consultations statewide. For cases in other states we work with partner firms.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="block" id="contacto">
+      <div class="contact">
+        <div>
+          <span class="eyebrow">Contact</span>
+          <h2>Tell us about your case today</h2>
+          <p class="lede">A short message is enough to know if we can help.</p>
+          <div class="ctas">
+            <a class="btn btn-wa" href="#contacto" data-event="whatsapp_click">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>
+              Message us on WhatsApp
+            </a>
+          </div>
+        </div>
+        <dl class="facts">
+          <div><dt>WhatsApp</dt><dd>+1 (555) 000-0000 (example)</dd></div>
+          <div><dt>Office</dt><dd>123 Example Ave, Suite 4 · Springfield</dd></div>
+          <div><dt>Hours</dt><dd>Monday to Friday, 9 am to 6 pm</dd></div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Ferreyra &amp; Solis: a fictional firm created as a design demo.</p>
+    <p>The information on this site is general and is not legal advice for your case.</p>
+  </footer>
+</div>
+
+<a class="float-wa" href="#contacto" data-event="whatsapp_click" aria-label="Message us on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3Z"/></svg>
+</a>
+</html>
