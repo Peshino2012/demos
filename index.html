@@ -2,38 +2,80 @@
 <html lang="es">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Demos de páginas web y automatización</title>
-<meta name="description" content="Ejemplos de landing pages y de automatización de planillas de Excel. Proyectos de demostración con datos ficticios.">
+<title>Demos de páginas web y herramientas</title>
+<meta name="description" content="Ejemplos de páginas web para distintos rubros y de herramientas para el día a día: turnos, recordatorios por WhatsApp, planillas y reportes. Demos con datos ficticios.">
 <link rel="stylesheet" href="estilo.css">
+<style>
+h2.sec { font-size: clamp(22px, 3vw, 28px); margin: 44px 0 6px; }
+p.sub { color: var(--muted); margin: 0 0 20px; }
+.banner { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; }
+.banner b { font-size: 19px; display: block; }
+.banner span { color: var(--muted); }
+</style>
 <div class="wrap">
-  <h1>Páginas web y automatización de planillas</h1>
-  <p class="lede">Ejemplos de trabajos que hago: páginas rápidas, pensadas para el celular y con botón de WhatsApp, y automatización de Excel y Google Sheets. Son demos con datos ficticios.</p>
+  <h1>Páginas web y herramientas para tu negocio</h1>
+  <p class="lede">Ejemplos de lo que hago: páginas rápidas, pensadas para el celular y con botón de WhatsApp, y herramientas para el día a día como turnos, recordatorios y planillas que avisan solas. Son demos con datos ficticios.</p>
+
+  <div class="banner">
+    <div><b>¿Qué podría resolver en tu rubro?</b><span>Turnos, recordatorios, cobros, stock y más, explicado rubro por rubro.</span></div>
+    <a class="btn" href="soluciones/">Ver soluciones por rubro</a>
+  </div>
+
+  <h2 class="sec">Páginas web por rubro</h2>
+  <p class="sub">Cada una muestra cómo podría verse la página de un negocio de ese rubro.</p>
   <div class="grid">
     <article class="card">
-      <img src="abogados/vista.png" alt="Landing page de un estudio de abogados, en computadora y en celular">
-      <div class="b">
-        <h2>Estudio de abogados</h2>
-        <p>Página para un estudio jurídico: áreas de práctica, equipo, preguntas frecuentes y contacto directo por WhatsApp.</p>
-        <div class="links"><a class="btn" href="abogados/">Ver demo</a><a class="btn alt" href="abogados/en.html">English</a></div>
-      </div>
+      <img src="veterinaria/vista.png" alt="Página de una veterinaria en computadora y celular">
+      <div class="b"><h2>Veterinaria</h2><p>Servicios, urgencias y recordatorio de vacunas por WhatsApp.</p>
+        <div class="links"><a class="btn" href="veterinaria/">Ver demo</a></div></div>
     </article>
     <article class="card">
-      <img src="curso-excel/vista.png" alt="Página de venta de un curso online de Excel, en computadora y en celular">
-      <div class="b">
-        <h2>Curso online</h2>
-        <p>Página de venta para un curso: temario, precio con garantía, docente, preguntas frecuentes y formulario de inscripción.</p>
-        <div class="links"><a class="btn" href="curso-excel/">Ver demo</a><a class="btn alt" href="curso-excel/en.html">English</a></div>
-      </div>
+      <img src="peluqueria/vista.png" alt="Página de una barbería en computadora y celular">
+      <div class="b"><h2>Peluquería y barbería</h2><p>Servicios con precios, turnos online con seña y recordatorio.</p>
+        <div class="links"><a class="btn" href="peluqueria/">Ver demo</a></div></div>
+    </article>
+    <article class="card">
+      <img src="estetica/vista.png" alt="Página de un centro de estética en computadora y celular">
+      <div class="b"><h2>Centro de estética</h2><p>Tratamientos, packs de sesiones y gift cards.</p>
+        <div class="links"><a class="btn" href="estetica/">Ver demo</a></div></div>
+    </article>
+    <article class="card">
+      <img src="gimnasio/vista.png" alt="Página de un gimnasio en computadora y celular">
+      <div class="b"><h2>Gimnasio</h2><p>Planes, horarios de clases y clase de prueba gratis.</p>
+        <div class="links"><a class="btn" href="gimnasio/">Ver demo</a></div></div>
+    </article>
+    <article class="card">
+      <img src="consultorio/vista.png" alt="Página de un consultorio odontológico en computadora y celular">
+      <div class="b"><h2>Consultorio</h2><p>Tratamientos, obras sociales y turnos con recordatorio.</p>
+        <div class="links"><a class="btn" href="consultorio/">Ver demo</a></div></div>
+    </article>
+    <article class="card">
+      <img src="abogados/vista.png" alt="Página de un estudio de abogados en computadora y celular">
+      <div class="b"><h2>Estudio de abogados</h2><p>Áreas de práctica, equipo, preguntas frecuentes y consulta por WhatsApp.</p>
+        <div class="links"><a class="btn" href="abogados/">Ver demo</a><a class="btn alt" href="abogados/en.html">English</a></div></div>
+    </article>
+    <article class="card">
+      <img src="curso-excel/vista.png" alt="Página de venta de un curso online en computadora y celular">
+      <div class="b"><h2>Curso online</h2><p>Temario, precio con garantía, docente e inscripción.</p>
+        <div class="links"><a class="btn" href="curso-excel/">Ver demo</a><a class="btn alt" href="curso-excel/en.html">English</a></div></div>
+    </article>
+  </div>
+
+  <h2 class="sec">Herramientas para el día a día</h2>
+  <p class="sub">Para ahorrar tiempo en tareas que hoy se hacen a mano.</p>
+  <div class="grid">
+    <article class="card">
+      <img src="planillas/vista.png" alt="Planilla de vacunas con botones para avisar por WhatsApp">
+      <div class="b"><h2>Planillas que avisan solas</h2><p>Cuotas de gimnasio, vacunas o packs de sesiones: la planilla calcula y arma el mensaje de WhatsApp. Probala.</p>
+        <div class="links"><a class="btn" href="planillas/">Probar demo</a></div></div>
     </article>
     <article class="card">
       <img src="reporte-excel/reporte-es.png" alt="Reporte consolidado de ventas generado automáticamente">
-      <div class="b">
-        <h2>Reporte automático de Excel</h2>
-        <p>Un script junta las planillas de 3 sucursales con formatos distintos, limpia los datos y arma un reporte con totales y gráfico.</p>
-        <div class="links"><a class="btn" href="reporte-excel/">Ver demo</a></div>
-      </div>
+      <div class="b"><h2>Reporte automático de Excel</h2><p>Junta las planillas de varias sucursales, limpia los datos y arma un reporte con totales y gráfico.</p>
+        <div class="links"><a class="btn" href="reporte-excel/">Ver demo</a></div></div>
     </article>
   </div>
+
   <footer>Todos los nombres, datos y precios de estas demos son ficticios.</footer>
 </div>
 </html>

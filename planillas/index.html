@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planillas que avisan solas</title>
+<meta name="description" content="Demo: planillas de Google Sheets o Excel que calculan vencimientos y arman el mensaje de WhatsApp para cada cliente.">
+<link rel="stylesheet" href="../rubros.css">
+<style>
+:root { --display: system-ui, -apple-system, "Segoe UI", sans-serif; --accent: #1F7A4D; --accent-soft: #DFF1E7; --accent-ink: #FFFFFF; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent: #5ACB8F; --accent-soft: #19301F; --accent-ink: #0A1A10; } }
+:root[data-theme="dark"] { --accent: #5ACB8F; --accent-soft: #19301F; --accent-ink: #0A1A10; }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.tabs button { font: 600 15px/1 var(--body); padding: 11px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.sheet { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.sheet .fx { display: flex; gap: 10px; align-items: center; padding: 9px 14px; border-bottom: 1px solid var(--line); font: 13px/1.4 ui-monospace, Menlo, monospace; color: var(--muted); overflow-x: auto; white-space: nowrap; }
+.sheet .fx b { color: var(--accent); font-style: italic; }
+.scroll { overflow-x: auto; }
+.sheet table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 620px; }
+.sheet th, .sheet td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+.sheet th { font-size: 12px; color: var(--muted); font-weight: 600; background: color-mix(in srgb, var(--surface) 90%, var(--ink)); }
+.sheet tr:last-child td { border-bottom: 0; }
+.st { font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px; }
+.ok { background: #DFF3E6; color: #17663C; }
+.soon { background: #FFF1D6; color: #8A5A00; }
+.late { background: #FBE1E1; color: #A12828; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ok { background: #173523; color: #7FDCA5; } :root:not([data-theme="light"]) .soon { background: #3A2D12; color: #F4C76A; } :root:not([data-theme="light"]) .late { background: #3D1B1B; color: #F29A9A; } }
+.mini { display: inline-flex; align-items: center; gap: 6px; font: 600 13px/1 var(--body); padding: 8px 12px; border-radius: 999px; background: var(--wa); color: var(--wa-ink); text-decoration: none; border: 0; cursor: pointer; }
+.mini[aria-disabled="true"] { background: var(--line); color: var(--muted); pointer-events: none; }
+.preview { margin-top: 16px; }
+.how { margin-top: 10px; font-size: 14px; color: var(--muted); }
+</style>
+
+<div class="demo-bar">Demo: los nombres y los datos son ficticios. · <a href="../">← Todas las demos</a></div>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../"><span class="logo" aria-hidden="true">▦</span><span><b>Planillas que avisan solas</b><small>Google Sheets o Excel</small></span></a>
+  </header>
+
+  <main>
+    <section class="hero" style="grid-template-columns: 1fr;">
+      <div>
+        <span class="kicker">Para gimnasios, veterinarias, centros de estética y más</span>
+        <h1>La planilla calcula, <em>vos solo tocás “Avisar”.</em></h1>
+        <p class="lede">Cargás a tus clientes una vez. La planilla calcula quién está por vencer, a quién le toca la vacuna o cuántas sesiones le quedan, y arma el mensaje de WhatsApp listo para enviar. Sin abonos mensuales: la planilla es tuya.</p>
+      </div>
+    </section>
+
+    <section class="block" style="padding-top: 24px;">
+      <div class="tabs" role="tablist" aria-label="Ejemplos por rubro">
+        <button role="tab" aria-selected="true" data-tab="gym">Gimnasio: cuotas</button>
+        <button role="tab" aria-selected="false" data-tab="vet">Veterinaria: vacunas</button>
+        <button role="tab" aria-selected="false" data-tab="est">Estética: packs de sesiones</button>
+      </div>
+      <div class="sheet">
+        <div class="fx"><b>fx</b><span id="formula"></span></div>
+        <div class="scroll"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+      </div>
+      <p class="how" id="how"></p>
+      <div class="preview" id="preview" hidden>
+        <div class="bubble"><small>Mensaje que se abre en WhatsApp</small><span id="previewText"></span></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="head"><span class="eyebrow">Cómo funciona</span><h2>Simple de usar, sin instalar nada</h2></div>
+      <ol class="steps">
+        <li><b>Cargás tus clientes</b><span>O los importamos de la planilla o cuaderno que ya usás.</span></li>
+        <li><b>La planilla hace las cuentas</b><span>Fórmulas que calculan vencimientos, dosis o sesiones restantes y marcan con colores.</span></li>
+        <li><b>Tocás “Avisar”</b><span>Se abre WhatsApp con el mensaje escrito para esa persona. Lo revisás y enviás.</span></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer><p>Demo de diseño. En la versión real la planilla vive en tu Google Drive o en tu computadora.</p></footer>
+</div>
+
+<script>
+const DIA = 864e5;
+const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+const enDias = d => new Date(hoy.getTime() + d * DIA);
+const fmt = f => f.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
+const diasHasta = f => Math.round((f - hoy) / DIA);
+function estado(dias, aviso) {
+  if (dias < 0) return ['late', `Vencida hace ${-dias} d`];
+  if (dias <= aviso) return ['soon', dias === 0 ? 'Vence hoy' : `Vence en ${dias} d`];
+  return ['ok', 'Al día'];
+}
+const DATOS = {
+  gym: {
+    formula: '=SI(C2<HOY();"Vencida";SI(C2-HOY()<=5;"Por vencer";"Al día"))',
+    how: 'La columna Estado se calcula sola con la fecha de vencimiento. Los que están por vencer o vencidos tienen el botón activo.',
+    cols: ['Socio', 'Plan', 'Vence', 'Estado', ''],
+    filas: [['Lucía Gómez', 'Pase libre', 3], ['Martín Díaz', 'Musculación', -4], ['Sofía Paz', 'Funcional', 18], ['Diego Ruiz', 'Pase libre', 0], ['Ana López', 'Musculación', 25]],
+    fila: ([n, plan, d]) => { const f = enDias(d), [c, t] = estado(d, 5);
+      return { celdas: [n, plan, fmt(f), `<span class="st ${c}">${t}</span>`], activo: c !== 'ok',
+        msg: `Hola ${n.split(' ')[0]}, te escribimos de Fuerza Norte. Tu plan ${plan} ${d < 0 ? 'venció el' : 'vence el'} ${fmt(f)}. ¿Querés que te pasemos el link de pago para renovarlo? ¡Gracias!` }; },
+  },
+  vet: {
+    formula: '=SI(D2-HOY()<=7;"Avisar";"Al día")',
+    how: 'Cada mascota tiene su próxima dosis. Una semana antes, la planilla la marca y arma el recordatorio para el tutor.',
+    cols: ['Mascota', 'Tutor/a', 'Vacuna', 'Próxima dosis', 'Estado', ''],
+    filas: [['Toby', 'Laura M.', 'Antirrábica', 4], ['Mishi', 'Carlos P.', 'Triple felina', 40], ['Luna', 'Romina S.', 'Séxtuple', -2], ['Rocco', 'Pablo F.', 'Desparasitación', 6], ['Nala', 'Vero T.', 'Antirrábica', 120]],
+    fila: ([m, t, v, d]) => { const f = enDias(d), [c, e] = estado(d, 7);
+      return { celdas: [m, t, v, fmt(f), `<span class="st ${c}">${e}</span>`], activo: c !== 'ok',
+        msg: `Hola ${t.split(' ')[0]}, te escribimos de Patitas del Parque. A ${m} le toca la ${v.toLowerCase()} el ${fmt(f)}. ¿Te reservamos un turno?` }; },
+  },
+  est: {
+    formula: '=C2-D2   → sesiones restantes',
+    how: 'Cada vez que la clienta viene, se suma una sesión usada. Cuando quedan pocas o el pack está por vencer, la planilla avisa.',
+    cols: ['Clienta', 'Pack', 'Total', 'Usadas', 'Quedan', 'Estado', ''],
+    filas: [['Valeria R.', 'Limpieza facial', 6, 5, 30], ['Camila N.', 'Depilación', 8, 2, 90], ['Julieta B.', 'Masajes', 4, 4, 10], ['Paula G.', 'Dermaplaning', 4, 1, 6]],
+    fila: ([n, p, tot, us, venceEn]) => { const q = tot - us;
+      const [c, e] = q === 0 ? ['late', 'Pack terminado'] : q <= 1 || venceEn <= 7 ? ['soon', q <= 1 ? 'Queda 1' : 'Vence pronto'] : ['ok', 'En curso'];
+      return { celdas: [n, p, tot, us, q, `<span class="st ${c}">${e}</span>`], activo: c !== 'ok',
+        msg: q === 0 ? `Hola ${n.split(' ')[0]}, ¡terminaste tu pack de ${p.toLowerCase()}! ¿Querés renovarlo con el mismo descuento?`
+                     : `Hola ${n.split(' ')[0]}, te ${q === 1 ? 'queda 1 sesión' : `quedan ${q} sesiones`} de ${p.toLowerCase()}${venceEn <= 7 ? ` y el pack vence el ${fmt(enDias(venceEn))}` : ''}. ¿Te reservamos el próximo turno?` }; },
+  },
+};
+function mostrar(tab) {
+  const d = DATOS[tab];
+  document.getElementById('formula').textContent = d.formula;
+  document.getElementById('how').textContent = d.how;
+  document.getElementById('thead').innerHTML = '<tr>' + d.cols.map(c => `<th>${c}</th>`).join('') + '</tr>';
+  document.getElementById('tbody').innerHTML = d.filas.map((f, i) => {
+    const r = d.fila(f);
+    const boton = `<button class="mini" data-msg="${encodeURIComponent(r.msg)}" ${r.activo ? '' : 'aria-disabled="true" tabindex="-1"'}>Avisar</button>`;
+    return '<tr>' + r.celdas.map(c => `<td>${c}</td>`).join('') + `<td>${boton}</td></tr>`;
+  }).join('');
+  document.getElementById('preview').hidden = true;
+  document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === tab));
+}
+document.querySelector('.tabs').addEventListener('click', e => { if (e.target.dataset.tab) mostrar(e.target.dataset.tab); });
+document.getElementById('tbody').addEventListener('click', e => {
+  const b = e.target.closest('.mini'); if (!b) return;
+  const texto = decodeURIComponent(b.dataset.msg);
+  document.getElementById('previewText').textContent = texto;
+  document.getElementById('preview').hidden = false;
+  document.getElementById('preview').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+});
+mostrar('gym');
+</script>
+</html>
