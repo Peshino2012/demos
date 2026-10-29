@@ -1,0 +1,13 @@
+/* 29/10: foto real en el inicio, íconos de línea y sin etiquetas en mayúsculas (OK de Martín). */
+.hero { align-items: center; }
+.foto-hero { margin: 0; position: relative; }
+.foto-hero img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 18px; }
+.foto-hero figcaption { position: absolute; left: 16px; bottom: 16px; display: flex; align-items: center; gap: 8px;
+  background: var(--surface); color: var(--ink); padding: 10px 14px; border-radius: 12px; font-size: 14px;
+  box-shadow: 0 10px 30px -12px rgba(0,0,0,.35); }
+.foto-hero figcaption span { display: grid; place-items: center; color: var(--accent); }
+.foto-hero figcaption svg { width: 20px; height: 20px; }
+.item .ic { background: none !important; width: auto !important; height: auto !important; color: var(--accent); display: block; margin-bottom: 10px; }
+.item .ic svg { width: 28px; height: 28px; }
+.brand .logo svg { width: 22px; height: 22px; }
+.grid .item { border: 0; border-top: 2px solid var(--line); border-radius: 0; background: transparent; padding: 18px 2px 4px; box-shadow: none; }
